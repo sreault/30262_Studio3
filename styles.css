@@ -3,22 +3,22 @@ ul {
  margin: 1px;
  padding: 1px;
  overflow: hidden;
- background-color: white;
+ background-color: #e6ffe6;
 }
 
 li {
  float: left;
- border-right: 2px solid white;
+ border-right: 2px solid black;
 }
 
 /* Add a border to all( but not the last) list items */
 li:last-child {
- border-right: none;
+ border-right: true;
 }
 
 li a {
  display: block;
- color: black;
+ color: #006600;
  text-align: left;
  padding: 15px 17px;
  text-decoration: none;
@@ -26,9 +26,9 @@ li a {
 
 /* Links will change color when hovered over */
 li a:hover {
- background-color: #a09f9f;
+ background-color: #ff884d;
 }
 
 .active {
- background-color: #a09f9f;
+ background-color: #ffbb99;
 }

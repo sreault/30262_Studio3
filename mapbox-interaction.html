@@ -8,11 +8,14 @@
   <link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet" />
   <!-- Adding Mapbox JavaScript file -->
   <script src="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css' type='text/css' /
   <!-- Adding styling info for the map -->
   <style type="text/css">
     body {
       margin: 0;
       padding: 0;
+      color: #006600
     }
 
     #map {
@@ -39,26 +42,46 @@
   <div id="map"></div>
   <script>
 
-    // Initialize the map
-    mapboxgl.accessToken = '<your access token here>';
+    // Initialize the map, Add my token
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic3JlYXVsdCIsImEiOiJja25qYXF4OGMwODlwMm9tMmF3a2V5cHh5In0.rmpWlPsAnyN1YBg4XTJQug';
     var map = new mapboxgl.Map({
       container: 'map', // container id
-      style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-      center: [-122.44, 37.76], // starting position [lng, lat]
-      zoom: 11 // starting zoom
+      style: 'mapbox://styles/sreault/cknuaw1mt0qm417paf5bybsdc', // stylesheet location
+      center: [-73.8987, 40.9312], // starting position, specified Yonkers, NY
+      zoom: 8 // starting zoom
     });
 
     // Add a popup: https://docs.mapbox.com/mapbox-gl-js/example/popup/
+    // popup identifying the best dog park in the area
+    var popup = new mapboxgl.Popup() //create popup
+        .setLngLat([-73.826111, 41.036944]) // dog park lat logn
+        .setHTML('<h1>The Best Dog Park!</h1>') //add text identifying the location
+        .addTo(map);
 
-    // Add pan and zoom controls: https://docs.mapbox.com/mapbox-gl-js/api/#map#addcontrol
 
+    var geocoder = new MapboxGeocoder({//initialize variable for geocoder
+      accessToken: 'pk.eyJ1Ijoic3JlYXVsdCIsImEiOiJja25qYXF4OGMwODlwMm9tMmF3a2V5cHh5In0.rmpWlPsAnyN1YBg4XTJQug',
+      mapboxgl: 'mapbox://styles/sreault/cknuaw1mt0qm417paf5bybsdc'
+    });
+
+    map.addControl(geocoder); //implement geocoder
+
+
+    map.addControl(new mapboxgl.NavigationControl()); //add zoom/pan control
     // Add a function that flies to a location: https://docs.mapbox.com/mapbox-gl-js/api/#map#flyto
+    map.jumpTo({pitch: 60}); //set pitch to 60
+    map.jumpTo({bearing: 45})//set bearing to 45
+    map.flyTo({
+      center: [-73.826111, 41.036944], //fly to the dog park
+      zoom: 13, //zoom to extent that gree space of park is seen
+      speed: 0.3,
+      curve: 1.5
+    });
 
-    // Add a function that sets pitch (tilt) to 60 and bearing (rotation) to 45: https://docs.mapbox.com/mapbox-gl-js/api/#map#setpitch and https://docs.mapbox.com/mapbox-gl-js/api/#map#setbearing
+    map.addControl(new mapboxgl.GeolocateControl()); //ADD Geolocate tool
 
-    // Add a search box: https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-geocoder/
 
-    // Add a geolocation button: https://docs.mapbox.com/mapbox-gl-js/api/#geolocatecontrol
+
 
     </script>
 
